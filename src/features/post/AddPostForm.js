@@ -50,7 +50,7 @@ const AddPostForm = () => {
             name="postContent"
           />
         </Form.Group>
-        <Button onClick={onSaveCliked()} type="button" variant="primary">
+        <Button onClick={onSaveCliked} type="button" variant="primary">
           Save Post
         </Button>
       </Form>
