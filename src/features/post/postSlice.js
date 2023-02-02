@@ -9,14 +9,20 @@ const initialState = [
   {
     id: 2,
     title: "i am learing React framework",
-    content: "Code And Jusr Code",
+    content: "Code And Just Code",
   },
 ];
 
 const postSlice = createSlice({
   name: "post",
   initialState,
-  reducers: {},
+  reducers: {
+    postAdded: (state, action) => {
+      state.push(action.payload);
+    },
+  },
 });
 
+export const selectAllPost = (state) => state.posts;
+export const { postAdded } = postSlice.actions;
 export default postSlice.reducer;

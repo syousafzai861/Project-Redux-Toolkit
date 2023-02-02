@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-
+import {selectAllPost} from "./postSlice";
 import React from 'react'
 
 const Postlist = () => {
-    const posts = useSelector(state => state.posts)
+    const posts = useSelector(selectAllPost)
     console.log(posts)
 
     const renderpost = posts.map((post)=>(
