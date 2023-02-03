@@ -2,9 +2,9 @@ import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
 import { postAdded } from "./postSlice";
 import { Button } from "react-bootstrap";
+// import { selectAllUsers } from "../users/usersSlice";
 
 const AddPostForm = () => {
   const [title, setTitle] = useState();
@@ -12,14 +12,12 @@ const AddPostForm = () => {
   const dispatch = useDispatch();
 
 
+
   const onSaveCliked = () => {
     if (title && content) {
       dispatch(
-        postAdded({
-          id: nanoid(),
-          title,
-          content,
-        })
+        postAdded(title,content),
+        console.log( postAdded(title,content))
       );
       //setting the input fields back to empty after posting and entity
       setTitle("");
@@ -30,18 +28,19 @@ const AddPostForm = () => {
     <section>
       <Form>
         <h2>ADD A POST</h2>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>POST TITLE</Form.Label>
+        <Form.Group >
+          <Form.Label>POST TITLE:</Form.Label>
           <Form.Control
             value={title}
             onChange={(e)=>setTitle(e.target.value)}
             type="text"
             placeholder="Enter Title"
             name="postTitle"
+            className="ml-10"
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Content</Form.Label>
+        <Form.Group >
+          <Form.Label>CONTENT:</Form.Label>
           <Form.Control
             value={content}
             onChange={(e)=>setContent(e.target.value)}
@@ -50,7 +49,7 @@ const AddPostForm = () => {
             name="postContent"
           />
         </Form.Group>
-        <Button onClick={onSaveCliked} type="button" variant="primary">
+        <Button style={{width:"100%"}} onClick={onSaveCliked} type="button" variant="primary">
           Save Post
         </Button>
       </Form>
