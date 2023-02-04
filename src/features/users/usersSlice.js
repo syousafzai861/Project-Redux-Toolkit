@@ -13,4 +13,4 @@ const initialState = [
  })
 
  export const selectAllUsers = (state)=>state.users;
- export default usersSlice.default;  
+ export default usersSlice.reducer;  

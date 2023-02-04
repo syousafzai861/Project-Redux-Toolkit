@@ -1,29 +1,39 @@
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { postAdded } from "./postSlice";
 import { Button } from "react-bootstrap";
-// import { selectAllUsers } from "../users/usersSlice";
+import { selectAllUsers } from "../users/usersSlice";
 
 const AddPostForm = () => {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
+  const [userid, setUserid] = useState();
   const dispatch = useDispatch();
-
+  const users = useSelector(selectAllUsers);
+  console.log(users);
 
 
   const onSaveCliked = () => {
     if (title && content) {
       dispatch(
-        postAdded(title,content),
-        console.log( postAdded(title,content))
+        postAdded(title,content,userid),
+        console.log( postAdded(title,content,userid))
       );
       //setting the input fields back to empty after posting and entity
       setTitle("");
       setContent("");
     }
   };
+
+  const cansave = Boolean(title) && Boolean(content) && Boolean(userid);
+
+  const userOptions = users.map((user)=>(
+    <option key={user.id} value={user.id}>
+          {user.name}
+    </option>
+  ))
   return (
     <section>
       <Form>
@@ -39,6 +49,11 @@ const AddPostForm = () => {
             className="ml-10"
           />
         </Form.Group>
+        <label htmlFor="postAuthor">Author: </label>
+        <select id="postAuthor" value={userid} onChange={(e)=>setUserid(e.target.value)}>
+         <option value=""></option>
+         {userOptions}
+        </select>
         <Form.Group >
           <Form.Label>CONTENT:</Form.Label>
           <Form.Control
@@ -49,7 +64,7 @@ const AddPostForm = () => {
             name="postContent"
           />
         </Form.Group>
-        <Button style={{width:"100%"}} onClick={onSaveCliked} type="button" variant="primary">
+        <Button style={{width:"100%"}} onClick={onSaveCliked} type="button" variant="primary" disabled={!cansave}>
           Save Post
         </Button>
       </Form>
